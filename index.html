@@ -2,34 +2,12 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Reaction Time Test</title>
+<title>Brain Reaction Games</title>
 
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-<h2>Color Reaction Test</h2>
-<p>Click ONLY when the target color appears.</p>
 
-<div id="targetColor" style="font-size:22px;margin-bottom:10px;"></div>
-
-<div id="colorGame"
-style="
-width:320px;
-height:320px;
-margin:20px auto;
-border-radius:10px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:28px;
-color:white;
-cursor:pointer;
-background:#444;
-">
-Click to Start
-</div>
-
-<div id="colorResults"></div>
 body{
 font-family:Arial, Helvetica, sans-serif;
 text-align:center;
@@ -39,11 +17,39 @@ color:white;
 }
 
 h1{
-margin-top:30px;
+margin-top:40px;
+}
+
+button{
+padding:15px 35px;
+font-size:20px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+background:#3498db;
+color:white;
+margin:10px;
+}
+
+button:hover{
+background:#2980b9;
+}
+
+/* MENU */
+
+#menu{
+padding-top:120px;
+}
+
+/* GAME AREA */
+
+.gameContainer{
+display:none;
+padding-top:40px;
 }
 
 #game{
-height:55vh;
+height:50vh;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -61,19 +67,38 @@ font-size:22px;
 margin-top:20px;
 }
 
-button{
-padding:15px 35px;
-font-size:20px;
-border:none;
-border-radius:6px;
+/* COLOR GAME */
+
+#colorGame{
+width:320px;
+height:320px;
+margin:20px auto;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
 cursor:pointer;
+background:#444;
+}
+
+/* CPS */
+
+#cpsButton{
+width:320px;
+height:320px;
 background:#3498db;
-color:white;
-margin-top:20px;
+margin:30px auto;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:30px;
+border-radius:10px;
+cursor:pointer;
 }
 
 canvas{
-max-width:900px;
+max-width:800px;
 margin:40px auto;
 }
 
@@ -81,6 +106,23 @@ margin:40px auto;
 </head>
 
 <body>
+
+<!-- MENU -->
+
+<div id="menu">
+
+<h1>Brain Reaction Games</h1>
+<p>Select a game</p>
+
+<button onclick="showGame('reaction')">Reaction Time</button>
+<button onclick="showGame('color')">Color Reaction</button>
+<button onclick="showGame('cps')">Click Speed Test (CPS)</button>
+
+</div>
+
+<!-- REACTION TIME -->
+
+<div id="reactionGame" class="gameContainer">
 
 <h1>Reaction Time Test</h1>
 <p>Wait for green and click as fast as possible. 5 attempts.</p>
@@ -90,12 +132,68 @@ Click to Start
 </div>
 
 <div id="results"></div>
-
 <div id="restartContainer"></div>
 
 <canvas id="chart"></canvas>
 
+</div>
+
+<!-- COLOR REACTION -->
+
+<div id="colorReactionGame" class="gameContainer">
+
+<h1>Color Reaction Test</h1>
+<p>Click ONLY when GREEN appears</p>
+
+<div id="colorGame">Click to Start</div>
+
+<div id="colorResults"></div>
+
+</div>
+
+<!-- CPS -->
+
+<div id="cpsGame" class="gameContainer">
+
+<h1>Click Speed Test</h1>
+
+<p>Click as fast as possible in 5 seconds</p>
+
+<div id="cpsButton">
+Click to Start
+</div>
+
+<div id="cpsResults"></div>
+
+</div>
+
 <script>
+
+/* MENU */
+
+function showGame(game){
+
+document.getElementById("menu").style.display="none";
+
+document.getElementById("reactionGame").style.display="none";
+document.getElementById("colorReactionGame").style.display="none";
+document.getElementById("cpsGame").style.display="none";
+
+if(game==="reaction"){
+document.getElementById("reactionGame").style.display="block";
+}
+
+if(game==="color"){
+document.getElementById("colorReactionGame").style.display="block";
+}
+
+if(game==="cps"){
+document.getElementById("cpsGame").style.display="block";
+}
+
+}
+
+/* REACTION TIME */
 
 let startTime;
 let waiting=false;
@@ -145,7 +243,6 @@ else if(waiting){
 
 game.className="blue";
 game.innerHTML="Too soon! Click to restart";
-
 resetGame();
 
 }
@@ -187,7 +284,7 @@ let average=Math.round(sum/scores.length);
 game.className="blue";
 game.innerHTML="Your average reaction time: "+average+" ms";
 
-results.innerHTML="Your attempts: "+scores.join(" ms, ")+" ms";
+results.innerHTML="Attempts: "+scores.join(" ms, ")+" ms";
 
 createChart(scores);
 
@@ -204,31 +301,15 @@ new Chart(document.getElementById("chart"),{
 type:"bar",
 
 data:{
-labels:[
-"Attempt 1",
-"Attempt 2",
-"Attempt 3",
-"Attempt 4",
-"Attempt 5",
-"Average Human"
-],
-
+labels:["Attempt 1","Attempt 2","Attempt 3","Attempt 4","Attempt 5","Average Human"],
 datasets:[{
-
 label:"Reaction Time (ms)",
-
 data:[...userScores,globalAverage]
-
 }]
-
 },
 
 options:{
-scales:{
-y:{
-beginAtZero:true
-}
-}
+scales:{y:{beginAtZero:true}}
 }
 
 });
@@ -237,31 +318,106 @@ beginAtZero:true
 
 function restartGame(){
 
-resetGame();
-
-game.innerHTML="Click to Start";
-
-results.innerHTML="";
-restartContainer.innerHTML="";
-document.getElementById("chart").getContext("2d").clearRect(0,0,800,400);
-
-}
-
-function resetGame(){
-
 attempts=0;
 scores=[];
 gameActive=false;
 
+game.innerHTML="Click to Start";
+game.className="blue";
+
+results.innerHTML="";
+restartContainer.innerHTML="";
+
 }
+
+/* COLOR REACTION */
+
+const colorGame=document.getElementById("colorGame");
+const colorResults=document.getElementById("colorResults");
+
+const colors=["red","blue","green","yellow","purple"];
+
+colorGame.addEventListener("click",function(){
+
+let randomColor=colors[Math.floor(Math.random()*colors.length)];
+
+colorGame.style.background=randomColor;
+
+if(randomColor==="green"){
+
+let start=Date.now();
+
+colorGame.onclick=function(){
+
+let reaction=Date.now()-start;
+
+colorResults.innerHTML="Reaction: "+reaction+" ms";
+
+};
+
+}else{
+
+colorGame.onclick=function(){
+
+colorResults.innerHTML="Wrong color! Wait for GREEN";
+
+};
+
+}
+
+});
+
+/* CPS */
+
+let cpsClicks=0;
+let cpsStarted=false;
+let cpsTime=5;
+
+const cpsButton=document.getElementById("cpsButton");
+const cpsResults=document.getElementById("cpsResults");
+
+cpsButton.addEventListener("click",function(){
+
+if(!cpsStarted){
+
+cpsStarted=true;
+cpsClicks=0;
+
+cpsButton.innerText="CLICK!";
+cpsResults.innerText="Time: 5s";
+
+let timer=setInterval(function(){
+
+cpsTime--;
+
+cpsResults.innerText="Time: "+cpsTime+"s";
+
+if(cpsTime<=0){
+
+clearInterval(timer);
+
+let cps=(cpsClicks/5).toFixed(2);
+
+cpsButton.innerText="Finished";
+
+cpsResults.innerHTML="Total Clicks: "+cpsClicks+"<br>CPS: "+cps;
+
+cpsStarted=false;
+cpsTime=5;
+
+}
+
+},1000);
+
+}else{
+
+cpsClicks++;
+
+}
+
+});
 
 </script>
 
 </body>
 </html>
-<div style="width:90%;max-width:900px;margin:60px auto;">
-<h2>Your Reaction Results</h2>
-<canvas id="reactionChart"></canvas>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
