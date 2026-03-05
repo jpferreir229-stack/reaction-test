@@ -2,15 +2,15 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Brain Reaction Games</title>
-
+<title>RuHuman - Brain Games</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
-<style>
-
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+* {
+    box-sizing: border-box;
+}
 
 body{
 font-family:'Poppins',sans-serif;
@@ -18,25 +18,26 @@ text-align:center;
 margin:0;
 background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
 color:white;
+min-height:100vh;
 }
 
-/* TITLES */
-
 h1{
-font-size:42px;
-margin-top:60px;
-font-weight:600;
+font-size:48px;
+margin-top:40px;
+font-weight:700;
+background:linear-gradient(135deg,#fff,#a8e6cf);
+-webkit-background-clip:text;
+-webkit-text-fill-color:transparent;
+text-shadow:2px 2px 4px rgba(0,0,0,0.3);
 }
 
 p{
-opacity:0.8;
+opacity:0.9;
 font-size:18px;
 }
 
-/* MENU */
-
 #menu{
-padding-top:120px;
+padding-top:80px;
 }
 
 button{
@@ -48,8 +49,10 @@ cursor:pointer;
 background:linear-gradient(135deg,#3a8dff,#00c6ff);
 color:white;
 margin:12px;
-transition:0.2s;
+transition:0.3s;
 box-shadow:0 8px 20px rgba(0,0,0,0.3);
+font-weight:600;
+letter-spacing:0.5px;
 }
 
 button:hover{
@@ -57,14 +60,23 @@ transform:scale(1.05);
 box-shadow:0 12px 30px rgba(0,0,0,0.5);
 }
 
-/* GAME CONTAINER */
+.menu-btn {
+background:linear-gradient(135deg,#ff6b6b,#ee5a24);
+margin-bottom:20px;
+}
+
+.small-btn {
+padding:10px 20px;
+font-size:14px;
+margin:5px;
+}
 
 .gameContainer{
 display:none;
-padding-top:40px;
+padding-top:20px;
+max-width:1200px;
+margin:0 auto;
 }
-
-/* REACTION BOX */
 
 #game{
 height:50vh;
@@ -91,28 +103,50 @@ background:linear-gradient(135deg,#ff416c,#ff4b2b);
 background:linear-gradient(135deg,#00c853,#64dd17);
 }
 
-/* COLOR GAME */
+/* COLOR GAME - NOVO ESTILO */
+#colorGameContainer {
+    margin: 30px auto;
+    max-width: 500px;
+}
 
 #colorGame{
-width:320px;
-height:320px;
-margin:40px auto;
-border-radius:16px;
+width:350px;
+height:350px;
+margin:20px auto;
+border-radius:20px;
 display:flex;
 align-items:center;
 justify-content:center;
-font-size:28px;
+font-size:32px;
+font-weight:bold;
 cursor:pointer;
-box-shadow:0 15px 35px rgba(0,0,0,0.4);
+box-shadow:0 20px 40px rgba(0,0,0,0.4);
+transition:0.1s;
+border:4px solid rgba(255,255,255,0.3);
 }
 
-/* CPS BUTTON */
+.target-color {
+    font-size: 24px;
+    margin: 20px 0;
+    padding: 15px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 50px;
+    display: inline-block;
+}
+
+.target-color span {
+    font-weight: bold;
+    padding: 8px 25px;
+    border-radius: 30px;
+    background: rgba(255,255,255,0.2);
+    margin-left: 10px;
+}
 
 #cpsButton{
 width:320px;
 height:320px;
 background:linear-gradient(135deg,#36d1dc,#5b86e5);
-margin:40px auto;
+margin:20px auto;
 display:flex;
 align-items:center;
 justify-content:center;
@@ -127,14 +161,10 @@ transition:0.2s;
 transform:scale(1.05);
 }
 
-/* RESULTS */
-
 #results{
 font-size:22px;
 margin-top:20px;
 }
-
-/* GRAPH */
 
 canvas{
 max-width:850px;
@@ -142,325 +172,505 @@ margin:50px auto;
 background:white;
 border-radius:10px;
 padding:20px;
+box-shadow:0 10px 30px rgba(0,0,0,0.3);
 }
 
-</style>
+.lose-message{
+color: #ff6b6b;
+font-weight: 600;
+font-size:24px;
+}
+
+.win-message{
+color: #00ff88;
+font-weight: 600;
+font-size:24px;
+}
+
+.game-header {
+display: flex;
+justify-content: space-between;
+align-items: center;
+padding: 0 30px;
+margin-bottom: 20px;
+}
+
+.game-title {
+flex-grow: 1;
+text-align: center;
+}
+
+.game-title h1 {
+margin: 0;
+font-size: 42px;
+}
+
+.back-btn {
+background: linear-gradient(135deg, #ff6b6b, #ee5a24);
+padding: 12px 30px;
+font-size: 18px;
+margin: 0;
+}
+
+.timer-text {
+font-size: 28px;
+font-weight: 700;
+margin: 20px 0;
+color: #00f2fe;
+text-shadow:0 0 10px rgba(0,242,254,0.5);
+}
+
+.cps-controls {
+    margin: 20px 0;
+}
+
+.cps-controls button {
+    padding: 10px 25px;
+    font-size: 16px;
+    margin: 0 10px;
+}
+
+.active-time {
+    background: linear-gradient(135deg,#00c853,#64dd17);
+    transform:scale(1.1);
+}
 </style>
 </head>
 
 <body>
 
 <!-- MENU -->
-
 <div id="menu">
-
-<h1>Brain Reaction Games</h1>
-<p>Select a game</p>
-
-<button onclick="showGame('reaction')">Reaction Time</button>
-<button onclick="showGame('color')">Color Reaction</button>
-<button onclick="showGame('cps')">Click Speed Test (CPS)</button>
-
+<h1>🚀 RuHuman</h1>
+<p>Test your brain limits</p>
+<button onclick="showGame('reaction')">⚡ Reaction Time</button>
+<button onclick="showGame('color')">🎨 Color Challenge</button>
+<button onclick="showGame('cps')">🖱️ Click Speed (CPS)</button>
 </div>
 
 <!-- REACTION TIME -->
-
 <div id="reactionGame" class="gameContainer">
-
-<h1>Reaction Time Test</h1>
-<p>Wait for green and click as fast as possible. 5 attempts.</p>
-
-<div id="game" class="blue">
-Click to Start
+<div class="game-header">
+<button class="back-btn" onclick="showMenu()">← Menu</button>
+<div class="game-title">
+<h1>⚡ Reaction Time</h1>
 </div>
-
+<div style="width:100px;"></div>
+</div>
+<p>Wait for green and click as fast as possible. 5 attempts. Click before green = LOSE!</p>
+<div id="game" class="blue">Click to Start</div>
 <div id="results"></div>
 <div id="restartContainer"></div>
-
 <canvas id="chart"></canvas>
-
 </div>
 
-<!-- COLOR REACTION -->
-
+<!-- COLOR REACTION - VERSÃO CORRIGIDA -->
 <div id="colorReactionGame" class="gameContainer">
+<div class="game-header">
+<button class="back-btn" onclick="showMenu()">← Menu</button>
+<div class="game-title">
+<h1>🎨 Color Challenge</h1>
+</div>
+<div style="width:100px;"></div>
+</div>
+<p>Click when the color matches the target!</p>
 
-<h1>Color Reaction Test</h1>
-<p>Click ONLY when GREEN appears</p>
-
-<div id="colorGame">Click to Start</div>
-
-<div id="colorResults"></div>
-
+<div id="colorGameContainer">
+    <div class="target-color">
+        Target: <span id="targetColorDisplay">GREEN</span>
+    </div>
+    
+    <div id="colorGame">Get Ready</div>
+    
+    <div id="colorResults" style="min-height:60px; margin:20px 0;"></div>
+    
+    <div style="margin-top:20px;">
+        <button class="small-btn" onclick="startColorGame()">🎮 Start Game</button>
+        <button class="small-btn" onclick="resetColorGame()">🔄 Reset</button>
+    </div>
+</div>
 </div>
 
-<!-- CPS -->
-
+<!-- CPS - VERSÃO CORRIGIDA COM SELETOR DE TEMPO -->
 <div id="cpsGame" class="gameContainer">
+<div class="game-header">
+<button class="back-btn" onclick="showMenu()">← Menu</button>
+<div class="game-title">
+<h1>🖱️ Click Speed Test</h1>
+</div>
+<div style="width:100px;"></div>
+</div>
+<p>Click as fast as you can!</p>
 
-<h1>Click Speed Test</h1>
-
-<p>Click as fast as possible in 5 seconds</p>
-
-<div id="cpsButton">
-Click to Start
+<div class="cps-controls">
+    <button class="small-btn time-btn active-time" onclick="setCPSTime(5)">5s</button>
+    <button class="small-btn time-btn" onclick="setCPSTime(10)">10s</button>
 </div>
 
-<div id="cpsResults"></div>
+<div id="cpsButton">Click to Start</div>
+<div id="cpsResults" style="min-height:80px; margin:20px 0;"></div>
 
+<div style="margin-top:20px;">
+    <button class="small-btn" onclick="resetCPSGame()">🔄 Restart</button>
+</div>
 </div>
 
 <script>
-
-/* MENU */
+// Função para mostrar menu
+function showMenu() {
+document.getElementById("menu").style.display = "block";
+document.getElementById("reactionGame").style.display = "none";
+document.getElementById("colorReactionGame").style.display = "none";
+document.getElementById("cpsGame").style.display = "none";
+restartGame();
+resetColorGame();
+resetCPSGame();
+}
 
 function showGame(game){
-
 document.getElementById("menu").style.display="none";
-
 document.getElementById("reactionGame").style.display="none";
 document.getElementById("colorReactionGame").style.display="none";
 document.getElementById("cpsGame").style.display="none";
 
 if(game==="reaction"){
 document.getElementById("reactionGame").style.display="block";
+restartGame();
 }
-
 if(game==="color"){
 document.getElementById("colorReactionGame").style.display="block";
+resetColorGame();
 }
-
 if(game==="cps"){
 document.getElementById("cpsGame").style.display="block";
+resetCPSGame();
 }
-
 }
 
 /* REACTION TIME */
-
 let startTime;
 let waiting=false;
 let attempts=0;
 const maxAttempts=5;
-
 let scores=[];
-let gameActive=false;
+let gameActive=true;
+let timeoutId=null;
+let gameOver=false;
 
 const game=document.getElementById("game");
 const results=document.getElementById("results");
 const restartContainer=document.getElementById("restartContainer");
 
-game.addEventListener("click",handleClick);
+game.addEventListener("click", handleReactionClick);
 
-function handleClick(){
+function handleReactionClick(){
+if(gameOver) return;
 
-if(!gameActive){
-
+if(!gameActive || game.classList.contains("blue")){
 gameActive=true;
 startRound();
 return;
+}
 
+if(waiting){
+loseGame("Too soon! You lost!");
+return;
 }
 
 if(game.classList.contains("green")){
-
 let reaction=Date.now()-startTime;
 scores.push(reaction);
-
 attempts++;
 
 if(attempts<maxAttempts){
-
 game.className="blue";
-game.innerHTML="Reaction: "+reaction+" ms<br>Click for next round ("+(attempts+1)+"/5)";
-
-}else{
-
+game.innerHTML="✅ " + reaction + " ms<br>Click for next round ("+(attempts+1)+"/5)";
+gameActive=true;
+waiting=false;
+} else {
 finishGame();
-
 }
-
 }
-
-else if(waiting){
-
-game.className="blue";
-game.innerHTML="Too soon! Click to restart";
-resetGame();
-
-}
-
-else if(game.classList.contains("blue") && attempts<maxAttempts){
-
-startRound();
-
-}
-
 }
 
 function startRound(){
+if(gameOver) return;
 
 game.className="red";
-game.innerText="Wait for green...";
+game.innerText="⏳ Wait for green...";
 waiting=true;
+gameActive=true;
+
+if(timeoutId) clearTimeout(timeoutId);
 
 let delay=Math.random()*3000+2000;
-
-setTimeout(()=>{
-
+timeoutId=setTimeout(()=>{
+if(gameOver) return;
 game.className="green";
-game.innerText="CLICK!";
+game.innerText="⚡ CLICK NOW! ⚡";
 startTime=Date.now();
 waiting=false;
-
+timeoutId=null;
 },delay);
+}
 
+function loseGame(message){
+if(timeoutId){
+clearTimeout(timeoutId);
+timeoutId=null;
+}
+
+gameOver=true;
+gameActive=false;
+waiting=false;
+
+game.className="red";
+game.innerHTML='<span class="lose-message">❌ ' + message + ' ❌</span>';
+results.innerHTML="You lost! Try again.";
+restartContainer.innerHTML=`<button onclick="restartGame()">Play Again</button>`;
 }
 
 function finishGame(){
-
 gameActive=false;
+gameOver=false;
+waiting=false;
+
+if(timeoutId){
+clearTimeout(timeoutId);
+timeoutId=null;
+}
 
 let sum=scores.reduce((a,b)=>a+b,0);
 let average=Math.round(sum/scores.length);
 
 game.className="blue";
-game.innerHTML="Your average reaction time: "+average+" ms";
-
+game.innerHTML="🏆 Average: "+average+" ms 🏆";
 results.innerHTML="Attempts: "+scores.join(" ms, ")+" ms";
-
 createChart(scores);
-
 restartContainer.innerHTML=`<button onclick="restartGame()">Restart</button>`;
-
 }
 
 function createChart(userScores){
-
 let globalAverage=273;
+let ctx=document.getElementById("chart").getContext("2d");
 
-new Chart(document.getElementById("chart"),{
+if(window.myChart) window.myChart.destroy();
 
+window.myChart = new Chart(ctx, {
 type:"bar",
-
 data:{
-labels:["Attempt 1","Attempt 2","Attempt 3","Attempt 4","Attempt 5","Average Human"],
+labels:["Attempt 1","Attempt 2","Attempt 3","Attempt 4","Attempt 5","Avg Human"],
 datasets:[{
 label:"Reaction Time (ms)",
-data:[...userScores,globalAverage]
+data:[...userScores,globalAverage],
+backgroundColor: [
+'rgba(54, 162, 235, 0.7)',
+'rgba(54, 162, 235, 0.7)',
+'rgba(54, 162, 235, 0.7)',
+'rgba(54, 162, 235, 0.7)',
+'rgba(54, 162, 235, 0.7)',
+'rgba(255, 99, 132, 0.7)'
+]
 }]
 },
-
 options:{
-scales:{y:{beginAtZero:true}}
+scales:{y:{beginAtZero:true, max:800}},
+responsive:true
 }
-
 });
-
 }
 
 function restartGame(){
-
 attempts=0;
 scores=[];
-gameActive=false;
+gameActive=true;
+waiting=false;
+gameOver=false;
+
+if(timeoutId){
+clearTimeout(timeoutId);
+timeoutId=null;
+}
 
 game.innerHTML="Click to Start";
 game.className="blue";
-
 results.innerHTML="";
 restartContainer.innerHTML="";
 
+if(window.myChart) window.myChart.destroy();
 }
 
-/* COLOR REACTION */
-
+/* COLOR REACTION - VERSÃO CORRIGIDA */
 const colorGame=document.getElementById("colorGame");
 const colorResults=document.getElementById("colorResults");
+const targetColorDisplay = document.getElementById("targetColorDisplay");
 
-const colors=["red","blue","green","yellow","purple"];
+// Lista completa de cores
+const colorList = [
+{name: "VERDE", bg: "#00c853"},
+{name: "VERMELHO", bg: "#ff416c"},
+{name: "AMARELO", bg: "#f1c40f"},
+{name: "LARANJA", bg: "#ffa502"},
+{name: "AZUL", bg: "#4facfe"},
+{name: "ROXO", bg: "#9b59b6"},
+{name: "ROSA", bg: "#ff6b81"}
+];
 
-colorGame.addEventListener("click",function(){
+let colorActive = false;
+let colorInterval = null;
+let targetColor = null; // Cor que o jogador precisa acertar
+let gameStarted = false;
 
-let randomColor=colors[Math.floor(Math.random()*colors.length)];
-
-colorGame.style.background=randomColor;
-
-if(randomColor==="green"){
-
-let start=Date.now();
-
-colorGame.onclick=function(){
-
-let reaction=Date.now()-start;
-
-colorResults.innerHTML="Reaction: "+reaction+" ms";
-
-};
-
-}else{
-
-colorGame.onclick=function(){
-
-colorResults.innerHTML="Wrong color! Wait for GREEN";
-
-};
-
+// Iniciar jogo
+function startColorGame() {
+    // Reset
+    if(colorInterval) clearInterval(colorInterval);
+    
+    colorActive = true;
+    gameStarted = true;
+    colorResults.innerHTML = "";
+    colorGame.style.opacity = "1";
+    colorGame.style.cursor = "pointer";
+    colorGame.style.border = "4px solid rgba(255,255,255,0.3)";
+    
+    // Escolhe cor alvo aleatória
+    let randomIndex = Math.floor(Math.random() * colorList.length);
+    targetColor = colorList[randomIndex];
+    targetColorDisplay.innerText = targetColor.name;
+    targetColorDisplay.style.background = targetColor.bg;
+    targetColorDisplay.style.color = "white";
+    targetColorDisplay.style.padding = "5px 20px";
+    targetColorDisplay.style.borderRadius = "30px";
+    
+    // Começa a trocar cores a cada 0.5 segundos
+    changeColor();
+    colorInterval = setInterval(changeColor, 500);
 }
 
-});
+// Mudar cor aleatória
+function changeColor() {
+    if(!colorActive || !gameStarted) return;
+    
+    let randomIndex = Math.floor(Math.random() * colorList.length);
+    let currentColor = colorList[randomIndex];
+    
+    colorGame.style.background = currentColor.bg;
+    colorGame.innerText = currentColor.name;
+    
+    // Configurar clique para esta cor
+    colorGame.onclick = function() {
+        if(!colorActive || !gameStarted) return;
+        
+        // Verifica se acertou a cor alvo
+        if(currentColor.name === targetColor.name) {
+            // GANHOU!
+            colorResults.innerHTML = '<span class="win-message">🎉 YOU WIN! 🎉</span>';
+            colorActive = false;
+            gameStarted = false;
+            if(colorInterval) clearInterval(colorInterval);
+            colorGame.style.border = "4px solid #00ff88";
+        } else {
+            // PERDEU - clicou na cor errada
+            colorResults.innerHTML = '<span class="lose-message">❌ Wrong color! You lost! ❌</span>';
+            colorActive = false;
+            gameStarted = false;
+            if(colorInterval) clearInterval(colorInterval);
+            colorGame.style.border = "4px solid #ff6b6b";
+        }
+    };
+}
 
-/* CPS */
+function resetColorGame() {
+    if(colorInterval) clearInterval(colorInterval);
+    colorActive = false;
+    gameStarted = false;
+    colorGame.style.background = "linear-gradient(135deg,#4facfe,#00f2fe)";
+    colorGame.innerText = "Click Start";
+    colorResults.innerHTML = "";
+    targetColorDisplay.innerText = "?";
+    targetColorDisplay.style.background = "rgba(255,255,255,0.2)";
+    colorGame.style.border = "4px solid rgba(255,255,255,0.3)";
+    colorGame.onclick = startColorGame;
+}
 
+// Inicializar
+colorGame.onclick = startColorGame;
+
+/* CPS - VERSÃO CORRIGIDA */
 let cpsClicks=0;
 let cpsStarted=false;
-let cpsTime=5;
+let cpsTime=5; // default 5s
+let cpsTimer;
+let cpsGameActive=false;
 
 const cpsButton=document.getElementById("cpsButton");
 const cpsResults=document.getElementById("cpsResults");
+const timeBtns = document.querySelectorAll('.time-btn');
 
-cpsButton.addEventListener("click",function(){
-
-if(!cpsStarted){
-
-cpsStarted=true;
-cpsClicks=0;
-
-cpsButton.innerText="CLICK!";
-cpsResults.innerText="Time: 5s";
-
-let timer=setInterval(function(){
-
-cpsTime--;
-
-cpsResults.innerText="Time: "+cpsTime+"s";
-
-if(cpsTime<=0){
-
-clearInterval(timer);
-
-let cps=(cpsClicks/5).toFixed(2);
-
-cpsButton.innerText="Finished";
-
-cpsResults.innerHTML="Total Clicks: "+cpsClicks+"<br>CPS: "+cps;
-
-cpsStarted=false;
-cpsTime=5;
-
+// Selecionar tempo
+function setCPSTime(seconds) {
+    cpsTime = seconds;
+    
+    // Atualizar botões ativos
+    timeBtns.forEach(btn => {
+        btn.classList.remove('active-time');
+        if(btn.innerText.includes(seconds + 's')) {
+            btn.classList.add('active-time');
+        }
+    });
+    
+    resetCPSGame();
 }
 
-},1000);
-
-}else{
-
+cpsButton.addEventListener("click", function(){
+if(!cpsStarted && !cpsGameActive){
+startCPSGame();
+} else if(cpsStarted) {
 cpsClicks++;
-
+cpsButton.innerText=cpsClicks;
 }
-
 });
 
-</script>
+function startCPSGame() {
+cpsStarted=true;
+cpsGameActive=true;
+cpsClicks=0;
 
+cpsButton.innerText="0";
+cpsResults.innerHTML = "Time: " + cpsTime + "s";
+
+let timeLeft = cpsTime;
+cpsTimer = setInterval(function(){
+timeLeft--;
+cpsResults.innerHTML = "Time: " + timeLeft + "s";
+
+if(timeLeft <= 0){
+clearInterval(cpsTimer);
+let cps = (cpsClicks / cpsTime).toFixed(2);
+cpsButton.innerText = "Finished!";
+cpsResults.innerHTML = '<span class="win-message">🎯 Total: ' + cpsClicks + ' clicks<br>⚡ CPS: ' + cps + '</span>';
+cpsStarted = false;
+cpsGameActive = false;
+}
+}, 1000);
+}
+
+function resetCPSGame() {
+if(cpsTimer) clearInterval(cpsTimer);
+cpsStarted = false;
+cpsGameActive = false;
+cpsClicks = 0;
+cpsButton.innerText = "Click to Start";
+cpsResults.innerHTML = "";
+}
+
+// Inicializar botões de tempo
+timeBtns.forEach(btn => {
+    btn.addEventListener('click', function() {
+        let seconds = parseInt(this.innerText);
+        setCPSTime(seconds);
+    });
+});
+</script>
 </body>
 </html>
