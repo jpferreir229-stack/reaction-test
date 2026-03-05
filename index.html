@@ -7,7 +7,29 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
+<h2>Color Reaction Test</h2>
+<p>Click ONLY when the target color appears.</p>
 
+<div id="targetColor" style="font-size:22px;margin-bottom:10px;"></div>
+
+<div id="colorGame"
+style="
+width:320px;
+height:320px;
+margin:20px auto;
+border-radius:10px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-size:28px;
+color:white;
+cursor:pointer;
+background:#444;
+">
+Click to Start
+</div>
+
+<div id="colorResults"></div>
 body{
 font-family:Arial, Helvetica, sans-serif;
 text-align:center;
