@@ -812,12 +812,14 @@ function setCPSTime(seconds) {
 }
 
 function handleCPSClick() {
+    // Se o jogo terminou (cpsGameActive = false), não faz nada
     if(!cpsStarted && !cpsGameActive) {
         startCPSGame();
     } else if(cpsStarted) {
         cpsClicks++;
         cpsButton.innerText = cpsClicks;
     }
+    // Se cpsGameActive = false (jogo terminou), simplesmente ignora o clique
 }
 
 function startCPSGame() {
