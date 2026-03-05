@@ -2,9 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>RuHuman - Brain Games</title>
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
+<title>reactions on time - Reaction Test</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
 
@@ -12,855 +10,407 @@
     box-sizing: border-box;
 }
 
-body{
-font-family:'Poppins',sans-serif;
-text-align:center;
-margin:0;
-background:linear-gradient(135deg,#0f2027,#203a43,#2c5364);
-color:white;
-min-height:100vh;
-}
-
-h1{
-font-size:48px;
-margin-top:40px;
-font-weight:700;
-background:linear-gradient(135deg,#fff,#a8e6cf);
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-text-shadow:2px 2px 4px rgba(0,0,0,0.3);
-}
-
-h2{
-font-size:32px;
-margin:20px 0;
-color:#fff;
-}
-
-p{
-opacity:0.9;
-font-size:18px;
-}
-
-#menu{
-padding-top:80px;
-}
-
-button{
-padding:15px 40px;
-font-size:18px;
-border:none;
-border-radius:10px;
-cursor:pointer;
-background:linear-gradient(135deg,#3a8dff,#00c6ff);
-color:white;
-margin:12px;
-transition:0.3s;
-box-shadow:0 8px 20px rgba(0,0,0,0.3);
-font-weight:600;
-letter-spacing:0.5px;
-}
-
-button:hover{
-transform:scale(1.05);
-box-shadow:0 12px 30px rgba(0,0,0,0.5);
-}
-
-.menu-btn {
-background:linear-gradient(135deg,#ff6b6b,#ee5a24);
-margin-bottom:20px;
-}
-
-.small-btn {
-padding:10px 20px;
-font-size:14px;
-margin:5px;
-}
-
-.gameContainer{
-display:none;
-padding-top:20px;
-max-width:1200px;
-margin:0 auto;
-}
-
-#game{
-height:50vh;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:42px;
-cursor:pointer;
-user-select:none;
-border-radius:14px;
-margin:40px;
-transition:0.2s;
-}
-
-.blue{
-background:linear-gradient(135deg,#4facfe,#00f2fe);
-}
-
-.red{
-background:linear-gradient(135deg,#ff416c,#ff4b2b);
-}
-
-.green{
-background:linear-gradient(135deg,#00c853,#64dd17);
-}
-
-/* COLOR GAME */
-#colorGameContainer {
-    margin: 30px auto;
-    max-width: 500px;
-}
-
-#colorGame{
-width:350px;
-height:350px;
-margin:20px auto;
-border-radius:20px;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:32px;
-font-weight:bold;
-cursor:pointer;
-box-shadow:0 20px 40px rgba(0,0,0,0.4);
-transition:0.1s;
-border:4px solid rgba(255,255,255,0.3);
-}
-
-.target-color {
-    font-size: 24px;
-    margin: 20px 0;
-    padding: 15px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50px;
-    display: inline-block;
-}
-
-.target-color span {
-    font-weight: bold;
-    padding: 8px 25px;
-    border-radius: 30px;
-    background: rgba(255,255,255,0.2);
-    margin-left: 10px;
-}
-
-#cpsButton{
-width:320px;
-height:320px;
-background:linear-gradient(135deg,#36d1dc,#5b86e5);
-margin:20px auto;
-display:flex;
-align-items:center;
-justify-content:center;
-font-size:30px;
-border-radius:16px;
-cursor:pointer;
-box-shadow:0 15px 35px rgba(0,0,0,0.4);
-transition:0.2s;
-}
-
-#cpsButton:hover{
-transform:scale(1.05);
-}
-
-#results{
-font-size:22px;
-margin-top:20px;
-}
-
-/* GRAPH CONTAINER - SEM FUNDO BRANCO */
-.graph-container {
-    max-width: 900px;
-    margin: 30px auto;
-    padding: 20px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 20px;
-    backdrop-filter: blur(10px);
-}
-
-.graph-row {
-    display: flex;
-    justify-content: space-between;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-.graph-box {
-    flex: 1;
-    background: rgba(255,255,255,0.05);
-    border-radius: 15px;
-    padding: 15px;
-}
-
-.graph-box h3 {
-    color: #fff;
-    margin-bottom: 15px;
-    font-size: 20px;
-}
-
-.graph-box canvas {
-    max-width: 100%;
-    height: auto;
-    background: transparent !important;
-    border-radius: 10px;
-}
-
-.lose-message{
-color: #ff6b6b;
-font-weight: 600;
-font-size:24px;
-}
-
-.win-message{
-color: #00ff88;
-font-weight: 600;
-font-size:24px;
-}
-
-.game-header {
-display: flex;
-justify-content: space-between;
-align-items: center;
-padding: 0 30px;
-margin-bottom: 20px;
-}
-
-.game-title {
-flex-grow: 1;
-text-align: center;
-}
-
-.game-title h1 {
-margin: 0;
-font-size: 42px;
-}
-
-.back-btn {
-background: linear-gradient(135deg, #ff6b6b, #ee5a24);
-padding: 12px 30px;
-font-size: 18px;
-margin: 0;
-}
-
-.timer-text {
-font-size: 28px;
-font-weight: 700;
-margin: 20px 0;
-color: #00f2fe;
-text-shadow:0 0 10px rgba(0,242,254,0.5);
-}
-
-.cps-controls {
-    margin: 20px 0;
-}
-
-.cps-controls button {
-    padding: 10px 25px;
-    font-size: 16px;
-    margin: 0 10px;
-}
-
-.active-time {
-    background: linear-gradient(135deg,#00c853,#64dd17);
-    transform:scale(1.1);
-}
-
-/* NICKNAME INPUT */
-.nickname-container {
-    margin: 20px 0;
-    padding: 20px;
-    background: rgba(255,255,255,0.05);
-    border-radius: 15px;
-}
-
-.nickname-container input {
-    padding: 12px 20px;
-    font-size: 16px;
-    border: none;
-    border-radius: 8px;
-    margin-right: 10px;
-    width: 200px;
-}
-
-.nickname-container button {
-    padding: 12px 30px;
-    font-size: 16px;
+body {
+    font-family: 'Poppins', sans-serif;
+    text-align: center;
     margin: 0;
-}
-
-.leaderboard {
-    margin-top: 20px;
-    text-align: left;
-    background: rgba(255,255,255,0.05);
-    border-radius: 15px;
-    padding: 20px;
-}
-
-.leaderboard h3 {
-    color: #00f2fe;
-    margin-bottom: 15px;
-    font-size: 24px;
-}
-
-.leaderboard-item {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+    color: white;
+    min-height: 100vh;
     display: flex;
-    justify-content: space-between;
-    padding: 10px 15px;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    align-items: center;
+    justify-content: center;
+}
+
+.container {
+    max-width: 800px;
+    width: 90%;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(10px);
+    padding: 40px;
+    border-radius: 30px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+h1 {
+    font-size: 48px;
+    margin: 0 0 10px 0;
+    background: linear-gradient(135deg, #fff, #a8e6cf);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: lowercase;
+}
+
+h1::first-letter {
+    text-transform: uppercase;
+}
+
+.subtitle {
+    color: #aaa;
+    margin-bottom: 30px;
     font-size: 18px;
 }
 
-.leaderboard-item:last-child {
+#game {
+    height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 36px;
+    cursor: pointer;
+    border-radius: 20px;
+    margin: 30px 0;
+    transition: all 0.2s;
+    font-weight: bold;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.blue {
+    background: linear-gradient(135deg, #4facfe, #00f2fe);
+}
+
+.red {
+    background: linear-gradient(135deg, #ff416c, #ff4b2b);
+}
+
+.green {
+    background: linear-gradient(135deg, #00c853, #64dd17);
+}
+
+.stats {
+    display: flex;
+    justify-content: space-around;
+    margin: 30px 0;
+    gap: 20px;
+}
+
+.stat-box {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.1);
+    padding: 20px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.stat-label {
+    font-size: 14px;
+    opacity: 0.8;
+    margin-bottom: 10px;
+}
+
+.stat-value {
+    font-size: 32px;
+    font-weight: bold;
+    color: #00f2fe;
+}
+
+.history-box {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 30px;
+}
+
+.history-box h3 {
+    color: #00f2fe;
+    margin: 0 0 20px 0;
+    font-size: 24px;
+}
+
+.history-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 12px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    font-size: 18px;
+}
+
+.history-item:last-child {
     border-bottom: none;
 }
 
-.leaderboard-item .rank {
-    color: #00f2fe;
-    font-weight: bold;
-    width: 50px;
+.history-item .date {
+    color: #aaa;
 }
 
-.leaderboard-item .name {
-    flex: 1;
-    color: #fff;
-}
-
-.leaderboard-item .score {
+.history-item .score {
     color: #00ff88;
     font-weight: bold;
+}
+
+.no-history {
+    opacity: 0.7;
+    font-style: italic;
+    padding: 20px;
+}
+
+.lose-message {
+    color: #ff6b6b;
+    font-size: 28px;
+}
+
+.win-message {
+    color: #00ff88;
+    font-size: 28px;
+}
+
+#results {
+    font-size: 20px;
+    margin: 20px 0;
+    min-height: 30px;
+}
+
+button {
+    background: linear-gradient(135deg, #3a8dff, #00c6ff);
+    color: white;
+    border: none;
+    padding: 15px 40px;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: 0.3s;
+    margin: 10px;
+}
+
+button:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+}
+
+.footer {
+    margin-top: 20px;
+    color: #666;
+    font-size: 14px;
 }
 </style>
 </head>
 
 <body>
-
-<!-- MENU -->
-<div id="menu">
-<h1>🚀 RuHuman</h1>
-<p>Test your brain limits</p>
-<button onclick="showGame('reaction')">⚡ Reaction Time</button>
-<button onclick="showGame('color')">🎨 Color Challenge</button>
-<button onclick="showGame('cps')">🖱️ Click Speed (CPS)</button>
-</div>
-
-<!-- REACTION TIME -->
-<div id="reactionGame" class="gameContainer">
-<div class="game-header">
-<button class="back-btn" onclick="showMenu()">← Menu</button>
-<div class="game-title">
-<h1>⚡ Reaction Time</h1>
-</div>
-<div style="width:100px;"></div>
-</div>
-<p>Wait for green and click as fast as possible. 5 attempts. Click before green = LOSE!</p>
-
-<div class="nickname-container">
-    <input type="text" id="nickname" placeholder="Enter your nickname" maxlength="15">
-    <button onclick="saveScore()">Save Score</button>
-</div>
-
-<div id="game" class="blue">Click to Start</div>
-<div id="results"></div>
-<div id="restartContainer"></div>
-
-<div class="graph-container">
-    <div class="graph-row">
-        <div class="graph-box">
-            <h3>🏆 Your Performance</h3>
-            <canvas id="playerChart"></canvas>
-        </div>
-        <div class="graph-box">
-            <h3>⭐ Pro Players Comparison</h3>
-            <canvas id="proChart"></canvas>
-        </div>
-    </div>
-    
-    <div class="leaderboard" id="leaderboard">
-        <h3>📊 Global Leaderboard</h3>
-        <!-- Leaderboard will be populated here -->
-    </div>
-</div>
-</div>
-
-<!-- COLOR REACTION -->
-<div id="colorReactionGame" class="gameContainer">
-<div class="game-header">
-<button class="back-btn" onclick="showMenu()">← Menu</button>
-<div class="game-title">
-<h1>🎨 Color Challenge</h1>
-</div>
-<div style="width:100px;"></div>
-</div>
-<p>Click when the color matches the target! (0.4s per color)</p>
-
-<div id="colorGameContainer">
-    <div class="target-color">
-        Target: <span id="targetColorDisplay">GREEN</span>
-    </div>
-    
-    <div id="colorGame">Get Ready</div>
-    
-    <div id="colorResults" style="min-height:60px; margin:20px 0;"></div>
-    
-    <div style="margin-top:20px;">
-        <button class="small-btn" onclick="startColorGame()">🎮 Start Game</button>
-        <button class="small-btn" onclick="resetColorGame()">🔄 Reset</button>
-    </div>
-</div>
-</div>
-
-<!-- CPS -->
-<div id="cpsGame" class="gameContainer">
-<div class="game-header">
-<button class="back-btn" onclick="showMenu()">← Menu</button>
-<div class="game-title">
-<h1>🖱️ Click Speed Test</h1>
-</div>
-<div style="width:100px;"></div>
-</div>
-<p>Click as fast as you can!</p>
-
-<div class="cps-controls">
-    <button class="small-btn time-btn active-time" onclick="setCPSTime(5)">5s</button>
-    <button class="small-btn time-btn" onclick="setCPSTime(10)">10s</button>
-</div>
-
-<div id="cpsButton" onclick="handleCPSClick()">Click to Start</div>
-<div id="cpsResults" style="min-height:80px; margin:20px 0;"></div>
-</div>
-
-<script>
-// Leaderboard data
-let leaderboard = JSON.parse(localStorage.getItem('ruhuman_leaderboard')) || [];
-
-// Function to show menu
-function showMenu() {
-document.getElementById("menu").style.display = "block";
-document.getElementById("reactionGame").style.display = "none";
-document.getElementById("colorReactionGame").style.display = "none";
-document.getElementById("cpsGame").style.display = "none";
-restartGame();
-resetColorGame();
-resetCPSGame();
-}
-
-function showGame(game){
-document.getElementById("menu").style.display="none";
-document.getElementById("reactionGame").style.display="none";
-document.getElementById("colorReactionGame").style.display="none";
-document.getElementById("cpsGame").style.display="none";
-
-if(game==="reaction"){
-document.getElementById("reactionGame").style.display="block";
-restartGame();
-updateLeaderboardDisplay();
-}
-if(game==="color"){
-document.getElementById("colorReactionGame").style.display="block";
-resetColorGame();
-}
-if(game==="cps"){
-document.getElementById("cpsGame").style.display="block";
-resetCPSGame();
-}
-}
-
-/* REACTION TIME */
-let startTime;
-let waiting=false;
-let attempts=0;
-const maxAttempts=5;
-let scores=[];
-let gameActive=true;
-let timeoutId=null;
-let gameOver=false;
-
-const game=document.getElementById("game");
-const results=document.getElementById("results");
-const restartContainer=document.getElementById("restartContainer");
-
-game.addEventListener("click", handleReactionClick);
-
-function handleReactionClick(){
-if(gameOver) return;
-
-if(!gameActive || game.classList.contains("blue")){
-gameActive=true;
-startRound();
-return;
-}
-
-if(waiting){
-loseGame("Too soon! You lost!");
-return;
-}
-
-if(game.classList.contains("green")){
-let reaction=Date.now()-startTime;
-scores.push(reaction);
-attempts++;
-
-if(attempts<maxAttempts){
-game.className="blue";
-game.innerHTML="✅ " + reaction + " ms<br>Click for next round ("+(attempts+1)+"/5)";
-gameActive=true;
-waiting=false;
-} else {
-finishGame();
-}
-}
-}
-
-function startRound(){
-if(gameOver) return;
-
-game.className="red";
-game.innerText="⏳ Wait for green...";
-waiting=true;
-gameActive=true;
-
-if(timeoutId) clearTimeout(timeoutId);
-
-let delay=Math.random()*3000+2000;
-timeoutId=setTimeout(()=>{
-if(gameOver) return;
-game.className="green";
-game.innerText="⚡ CLICK NOW! ⚡";
-startTime=Date.now();
-waiting=false;
-timeoutId=null;
-},delay);
-}
-
-function loseGame(message){
-if(timeoutId){
-clearTimeout(timeoutId);
-timeoutId=null;
-}
-
-gameOver=true;
-gameActive=false;
-waiting=false;
-
-game.className="red";
-game.innerHTML='<span class="lose-message">❌ ' + message + ' ❌</span>';
-results.innerHTML="You lost! Try again.";
-restartContainer.innerHTML=`<button onclick="restartGame()">Play Again</button>`;
-}
-
-function finishGame(){
-gameActive=false;
-gameOver=false;
-waiting=false;
-
-if(timeoutId){
-clearTimeout(timeoutId);
-timeoutId=null;
-}
-
-let sum=scores.reduce((a,b)=>a+b,0);
-let average=Math.round(sum/scores.length);
-
-game.className="blue";
-game.innerHTML="🏆 Average: "+average+" ms 🏆";
-results.innerHTML="Attempts: "+scores.join(" ms, ")+" ms";
-createCharts(scores, average);
-restartContainer.innerHTML=`<button onclick="restartGame()">Play Again</button>`;
-}
-
-function createCharts(userScores, average) {
-    // Player chart
-    let playerCtx = document.getElementById("playerChart").getContext("2d");
-    if(window.playerChart) window.playerChart.destroy();
-    
-    window.playerChart = new Chart(playerCtx, {
-        type:"bar",
-        data:{
-            labels:["Attempt 1","Attempt 2","Attempt 3","Attempt 4","Attempt 5"],
-            datasets:[{
-                label:"Your Reaction Time (ms)",
-                data:userScores,
-                backgroundColor:"rgba(0, 242, 254, 0.7)",
-                borderColor:"#00f2fe",
-                borderWidth:2
-            }]
-        },
-        options:{
-            scales:{y:{beginAtZero:true, max:800, grid:{color:"rgba(255,255,255,0.1)"}}},
-            plugins:{legend:{labels:{color:"white"}}},
-            backgroundColor:"transparent"
-        }
-    });
-    
-    // Pro players chart
-    let proCtx = document.getElementById("proChart").getContext("2d");
-    if(window.proChart) window.proChart.destroy();
-    
-    // Pro players data
-    window.proChart = new Chart(proCtx, {
-        type:"bar",
-        data:{
-            labels:["Average Human","s1mple (CS)","NiKo (CS)","ZywOo (CS)","Average Pro"],
-            datasets:[{
-                label:"Reaction Time (ms)",
-                data:[273, 145, 152, 148, 150],
-                backgroundColor:[
-                    "rgba(255, 255, 255, 0.7)",
-                    "rgba(255, 107, 107, 0.7)",
-                    "rgba(255, 165, 2, 0.7)",
-                    "rgba(0, 200, 83, 0.7)",
-                    "rgba(155, 89, 182, 0.7)"
-                ],
-                borderColor:"white",
-                borderWidth:2
-            }]
-        },
-        options:{
-            scales:{y:{beginAtZero:true, max:300, grid:{color:"rgba(255,255,255,0.1)"}}},
-            plugins:{legend:{labels:{color:"white"}}},
-            backgroundColor:"transparent"
-        }
-    });
-}
-
-function saveScore() {
-    let nickname = document.getElementById("nickname").value.trim();
-    if(!nickname) {
-        alert("Please enter a nickname!");
-        return;
-    }
-    
-    if(scores.length === 0) {
-        alert("Complete the game first!");
-        return;
-    }
-    
-    let average = Math.round(scores.reduce((a,b)=>a+b,0) / scores.length);
-    
-    leaderboard.push({
-        name: nickname,
-        score: average,
-        date: new Date().toLocaleDateString()
-    });
-    
-    // Sort by best score (lower is better)
-    leaderboard.sort((a,b) => a.score - b.score);
-    
-    // Keep only top 10
-    if(leaderboard.length > 10) leaderboard = leaderboard.slice(0,10);
-    
-    localStorage.setItem('ruhuman_leaderboard', JSON.stringify(leaderboard));
-    updateLeaderboardDisplay();
-    
-    document.getElementById("nickname").value = "";
-    alert("Score saved!");
-}
-
-function updateLeaderboardDisplay() {
-    let leaderboardDiv = document.getElementById("leaderboard");
-    let html = '<h3>📊 Global Leaderboard</h3>';
-    
-    if(leaderboard.length === 0) {
-        html += '<p style="text-align:center; opacity:0.7;">No scores yet. Be the first!</p>';
-    } else {
-        leaderboard.forEach((entry, index) => {
-            html += `
-                <div class="leaderboard-item">
-                    <span class="rank">#${index+1}</span>
-                    <span class="name">${entry.name}</span>
-                    <span class="score">${entry.score} ms</span>
-                </div>
-            `;
-        });
-    }
-    
-    leaderboardDiv.innerHTML = html;
-}
-
-function restartGame(){
-attempts=0;
-scores=[];
-gameActive=true;
-waiting=false;
-gameOver=false;
-
-if(timeoutId){
-clearTimeout(timeoutId);
-timeoutId=null;
-}
-
-game.innerHTML="Click to Start";
-game.className="blue";
-results.innerHTML="";
-restartContainer.innerHTML="";
-
-if(window.playerChart) window.playerChart.destroy();
-if(window.proChart) window.proChart.destroy();
-}
-
-/* COLOR REACTION */
-const colorGame=document.getElementById("colorGame");
-const colorResults=document.getElementById("colorResults");
-const targetColorDisplay = document.getElementById("targetColorDisplay");
-
-const colorList = [
-{name: "GREEN", bg: "#00c853"},
-{name: "RED", bg: "#ff416c"},
-{name: "YELLOW", bg: "#f1c40f"},
-{name: "ORANGE", bg: "#ffa502"},
-{name: "BLUE", bg: "#4facfe"},
-{name: "PURPLE", bg: "#9b59b6"},
-{name: "PINK", bg: "#ff6b81"}
-];
-
-let colorActive = false;
-let colorInterval = null;
-let targetColor = null;
-let gameStarted = false;
-
-function startColorGame() {
-    if(colorInterval) clearInterval(colorInterval);
-    
-    colorActive = true;
-    gameStarted = true;
-    colorResults.innerHTML = "";
-    colorGame.style.opacity = "1";
-    colorGame.style.cursor = "pointer";
-    colorGame.style.border = "4px solid rgba(255,255,255,0.3)";
-    
-    let randomIndex = Math.floor(Math.random() * colorList.length);
-    targetColor = colorList[randomIndex];
-    targetColorDisplay.innerText = targetColor.name;
-    targetColorDisplay.style.background = targetColor.bg;
-    targetColorDisplay.style.color = "white";
-    targetColorDisplay.style.padding = "5px 20px";
-    targetColorDisplay.style.borderRadius = "30px";
-    
-    changeColor();
-    colorInterval = setInterval(changeColor, 400); // 0.4 seconds
-}
-
-function changeColor() {
-    if(!colorActive || !gameStarted) return;
-    
-    let randomIndex = Math.floor(Math.random() * colorList.length);
-    let currentColor = colorList[randomIndex];
-    
-    colorGame.style.background = currentColor.bg;
-    colorGame.innerText = currentColor.name;
-    
-    colorGame.onclick = function() {
-        if(!colorActive || !gameStarted) return;
+    <div class="container">
+        <h1>reactions on time</h1>
+        <div class="subtitle">test your reaction time</div>
         
-        if(currentColor.name === targetColor.name) {
-            colorResults.innerHTML = '<span class="win-message">🎉 YOU WIN! 🎉</span>';
-            colorActive = false;
-            gameStarted = false;
-            if(colorInterval) clearInterval(colorInterval);
-            colorGame.style.border = "4px solid #00ff88";
-        } else {
-            colorResults.innerHTML = '<span class="lose-message">❌ Wrong color! You lost! ❌</span>';
-            colorActive = false;
-            gameStarted = false;
-            if(colorInterval) clearInterval(colorInterval);
-            colorGame.style.border = "4px solid #ff6b6b";
-        }
-    };
-}
-
-function resetColorGame() {
-    if(colorInterval) clearInterval(colorInterval);
-    colorActive = false;
-    gameStarted = false;
-    colorGame.style.background = "linear-gradient(135deg,#4facfe,#00f2fe)";
-    colorGame.innerText = "Click Start";
-    colorResults.innerHTML = "";
-    targetColorDisplay.innerText = "?";
-    targetColorDisplay.style.background = "rgba(255,255,255,0.2)";
-    colorGame.style.border = "4px solid rgba(255,255,255,0.3)";
-    colorGame.onclick = startColorGame;
-}
-
-colorGame.onclick = startColorGame;
-
-/* CPS */
-let cpsClicks=0;
-let cpsStarted=false;
-let cpsTime=5;
-let cpsTimer;
-let cpsGameActive=false;
-
-const cpsButton=document.getElementById("cpsButton");
-const cpsResults=document.getElementById("cpsResults");
-const timeBtns = document.querySelectorAll('.time-btn');
-
-function setCPSTime(seconds) {
-    cpsTime = seconds;
-    
-    timeBtns.forEach(btn => {
-        btn.classList.remove('active-time');
-        if(btn.innerText.includes(seconds + 's')) {
-            btn.classList.add('active-time');
-        }
-    });
-    
-    resetCPSGame();
-}
-
-function handleCPSClick() {
-    // Se o jogo terminou (cpsGameActive = false), não faz nada
-    if(!cpsStarted && !cpsGameActive) {
-        startCPSGame();
-    } else if(cpsStarted) {
-        cpsClicks++;
-        cpsButton.innerText = cpsClicks;
-    }
-    // Se cpsGameActive = false (jogo terminou), simplesmente ignora o clique
-}
-
-function startCPSGame() {
-    cpsStarted = true;
-    cpsGameActive = true;
-    cpsClicks = 0;
-    
-    cpsButton.innerText = "0";
-    cpsResults.innerHTML = "Time: " + cpsTime + "s";
-    
-    let timeLeft = cpsTime;
-    cpsTimer = setInterval(function(){
-        timeLeft--;
-        cpsResults.innerHTML = "Time: " + timeLeft + "s";
+        <div id="game" class="blue">Click to Start</div>
         
-        if(timeLeft <= 0){
-            clearInterval(cpsTimer);
-            let cps = (cpsClicks / cpsTime).toFixed(2);
-            cpsButton.innerText = "Finished!";
-            cpsResults.innerHTML = '<span class="win-message">🎯 Total: ' + cpsClicks + ' clicks<br>⚡ CPS: ' + cps + '</span>';
-            cpsStarted = false;
-            cpsGameActive = false;
+        <div class="stats">
+            <div class="stat-box">
+                <div class="stat-label">Attempt</div>
+                <div class="stat-value" id="currentAttempt">1/5</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Last</div>
+                <div class="stat-value" id="lastScore">-</div>
+            </div>
+            <div class="stat-box">
+                <div class="stat-label">Best</div>
+                <div class="stat-value" id="bestScore">-</div>
+            </div>
+        </div>
+        
+        <div id="results"></div>
+        <div id="restartContainer"></div>
+        
+        <div class="history-box">
+            <h3>📋 Your History</h3>
+            <div id="historyList"></div>
+        </div>
+        
+        <div class="footer">5 attempts • click on green</div>
+    </div>
+
+    <script>
+        // Game variables
+        let startTime;
+        let waiting = false;
+        let attempts = 0;
+        const maxAttempts = 5;
+        let scores = [];
+        let gameActive = true;
+        let timeoutId = null;
+        let gameOver = false;
+        
+        // History array
+        let history = JSON.parse(localStorage.getItem('reaction_history')) || [];
+        
+        // DOM elements
+        const game = document.getElementById("game");
+        const results = document.getElementById("results");
+        const restartContainer = document.getElementById("restartContainer");
+        const currentAttemptSpan = document.getElementById("currentAttempt");
+        const lastScoreSpan = document.getElementById("lastScore");
+        const bestScoreSpan = document.getElementById("bestScore");
+        
+        // Initialize
+        updateHistoryDisplay();
+        updateStats();
+        
+        // Event listener
+        game.addEventListener("click", handleReactionClick);
+        
+        function handleReactionClick() {
+            if (gameOver) return;
+            
+            // Start game
+            if (!gameActive || game.classList.contains("blue")) {
+                gameActive = true;
+                startRound();
+                return;
+            }
+            
+            // Clicked too soon
+            if (waiting) {
+                loseGame("Too soon! You lost!");
+                return;
+            }
+            
+            // Clicked on green
+            if (game.classList.contains("green")) {
+                let reaction = Date.now() - startTime;
+                scores.push(reaction);
+                attempts++;
+                
+                currentAttemptSpan.textContent = (attempts + 1) + "/5";
+                
+                if (attempts < maxAttempts) {
+                    game.className = "blue";
+                    game.innerHTML = "✅ " + reaction + " ms<br>Click for next round";
+                    gameActive = true;
+                    waiting = false;
+                } else {
+                    finishGame();
+                }
+            }
         }
-    }, 1000);
-}
-
-function resetCPSGame() {
-    if(cpsTimer) clearInterval(cpsTimer);
-    cpsStarted = false;
-    cpsGameActive = false;
-    cpsClicks = 0;
-    cpsButton.innerText = "Click to Start";
-    cpsResults.innerHTML = "";
-}
-
-timeBtns.forEach(btn => {
-    btn.addEventListener('click', function() {
-        let seconds = parseInt(this.innerText);
-        setCPSTime(seconds);
-    });
-});
-</script>
+        
+        function startRound() {
+            if (gameOver) return;
+            
+            game.className = "red";
+            game.innerText = "⏳ Wait for green...";
+            waiting = true;
+            gameActive = true;
+            
+            if (timeoutId) clearTimeout(timeoutId);
+            
+            let delay = Math.random() * 3000 + 2000; // 2-5 seconds
+            timeoutId = setTimeout(() => {
+                if (gameOver) return;
+                game.className = "green";
+                game.innerText = "⚡ CLICK NOW! ⚡";
+                startTime = Date.now();
+                waiting = false;
+                timeoutId = null;
+            }, delay);
+        }
+        
+        function loseGame(message) {
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            
+            gameOver = true;
+            gameActive = false;
+            waiting = false;
+            
+            game.className = "red";
+            game.innerHTML = '<span class="lose-message">❌ ' + message + ' ❌</span>';
+            results.innerHTML = "You lost! Try again.";
+            restartContainer.innerHTML = '<button onclick="restartGame()">Play Again</button>';
+        }
+        
+        function finishGame() {
+            gameActive = false;
+            gameOver = false;
+            waiting = false;
+            
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            
+            let sum = scores.reduce((a, b) => a + b, 0);
+            let average = Math.round(sum / scores.length);
+            
+            // Save to history
+            let historyEntry = {
+                date: new Date().toLocaleString(),
+                average: average,
+                attempts: [...scores]
+            };
+            history.unshift(historyEntry);
+            if (history.length > 10) history.pop();
+            localStorage.setItem('reaction_history', JSON.stringify(history));
+            
+            // Update display
+            game.className = "blue";
+            game.innerHTML = "🏆 Average: " + average + " ms 🏆";
+            
+            let attemptsText = scores.map((s, i) => `#${i+1}: ${s}ms`).join(" • ");
+            results.innerHTML = attemptsText;
+            
+            restartContainer.innerHTML = '<button onclick="restartGame()">Play Again</button>';
+            
+            // Update history and stats
+            updateHistoryDisplay();
+            updateStats();
+        }
+        
+        function restartGame() {
+            attempts = 0;
+            scores = [];
+            gameActive = true;
+            waiting = false;
+            gameOver = false;
+            
+            if (timeoutId) {
+                clearTimeout(timeoutId);
+                timeoutId = null;
+            }
+            
+            game.innerHTML = "Click to Start";
+            game.className = "blue";
+            results.innerHTML = "";
+            restartContainer.innerHTML = "";
+            currentAttemptSpan.textContent = "1/5";
+        }
+        
+        function updateHistoryDisplay() {
+            let historyList = document.getElementById("historyList");
+            let html = '';
+            
+            if (history.length === 0) {
+                html = '<div class="no-history">No games yet. Start playing!</div>';
+            } else {
+                history.forEach((entry, index) => {
+                    if (index < 5) { // Show only last 5 games
+                        html += `
+                            <div class="history-item">
+                                <span class="date">${entry.date}</span>
+                                <span class="score">${entry.average} ms</span>
+                            </div>
+                        `;
+                    }
+                });
+            }
+            
+            historyList.innerHTML = html;
+        }
+        
+        function updateStats() {
+            // Update last score
+            if (history.length > 0) {
+                lastScoreSpan.textContent = history[0].average + " ms";
+                
+                // Find best score
+                let best = Math.min(...history.map(h => h.average));
+                bestScoreSpan.textContent = best + " ms";
+            } else {
+                lastScoreSpan.textContent = "-";
+                bestScoreSpan.textContent = "-";
+            }
+        }
+    </script>
 </body>
 </html>
